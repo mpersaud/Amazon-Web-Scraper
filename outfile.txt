@@ -1,0 +1,2 @@
+INSERT 0553103547 item{isbn='0553103547', author_firstname='George R. R. Martin', year_published='ugust 1996', publisher='Publisher Bantam Books', title='A Game of Thrones (Song of Ice and Fire) ', price=35.0, quantity=1} Tue Dec 06 20:02:11 EST 2016
+MODIFY 0553103547 item{isbn='0553103547', author_firstname='George R. R. Martin', year_published='ugust 1996', publisher='Publisher Bantam Books', title='A Game of Thrones (Song of Ice and Fire) ', price=35.0, quantity=1} Tue Dec 06 20:02:43 EST 2016
