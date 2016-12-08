@@ -3,25 +3,21 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Hashtable;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by mike on 10/11/16.
  */
-public class storage implements Serializable {
-    //storage classes that holds all the data
+public class Storage implements Serializable {
+    //Storage classes that holds all the data
     //using a hashtable to store primary key and value Sets
-     Hashtable<String, item> table = new Hashtable<>();
+     Hashtable<String, Bookitem> table = new Hashtable<>();
     //files to write logs to
     String output_file;
 
     //constructor
-    public storage(String o){
+    public Storage(String o){
         output_file=o;
         try {
             new FileWriter(new File(output_file),false);
@@ -30,13 +26,13 @@ public class storage implements Serializable {
         }
     }
     //constructors
-    public storage(String input_file, String output_file) throws IOException, ParseException {
+    public Storage(String input_file, String output_file) throws IOException, ParseException {
             this.output_file=output_file;
 
         //reads in inputfile
         Scanner scan = new Scanner(new File(input_file));
          new FileWriter(new File(output_file), false);
-        //scanning in all attributes, creating new item and put item in table
+        //scanning in all attributes, creating new Bookitem and put Bookitem in table
         while(scan.hasNext()){
 
 
@@ -53,7 +49,7 @@ public class storage implements Serializable {
             double price = Double.parseDouble(st.nextToken());
             */
 
-            item i = new item(isbn);
+            Bookitem i = new Bookitem(isbn);
             table.put(isbn,i);
 
             //writing log
@@ -63,11 +59,11 @@ public class storage implements Serializable {
 
     }
 
-    public storage() {
+    public Storage() {
 
     }
     //insert method
-    public void insert(String k, item val){
+    public void insert(String k, Bookitem val){
         String s = "INSERT";
         //writing to file and inputting to table
         writetoFile(s,k,val);
@@ -75,7 +71,7 @@ public class storage implements Serializable {
 
     }
     //modifiy exisiting data
-    public void modify(String k, item val){
+    public void modify(String k, Bookitem val){
         String s = "MODIFY";
         //write to file and then replace value at id
         writetoFile(s,k,val);
@@ -98,16 +94,56 @@ public class storage implements Serializable {
 
     }
     //writing log to file
-    public void writetoFile(String identifier,String k, item val){
+    public void writetoFile(String identifier,String k, Bookitem val){
         //open output file and enter in change idfentifier, the key, and the value
         try {
             FileWriter writer = new FileWriter(new File(output_file),true);
             Date dat = new Date();
 
-            writer.write(identifier+" "+k+" "+val+" "+dat);
+            writer.write(identifier+" "+k);
+            writer.write(System.lineSeparator());
+            writer.write(""+val);
+            writer.write("Date: "+dat);
+            writer.write(System.lineSeparator());
+            writer.write("----------------------------------------------------------------------------------------------------");
             writer.write(System.lineSeparator());
             writer.close();
             //close writer and catch exception if needed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void writeReportFile(String k, String filename){
+        if(!filename.endsWith(".txt"))filename = filename+".txt";
+        try {
+            FileWriter writer = new FileWriter(new File(filename),false);
+            Bookitem i = table.get(k);
+
+            writer.write("ISBN|Title|Author|Publisher|YearPublished|Price|Quantity|");
+            writer.write(System.lineSeparator());
+            writer.write(i.isbn+"|"+i.title+"|"+i.author+"|"+i.publisher+"|"+i.year_published+"|"+i.price+"|"+i.quantity+"|"+i.rating);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void writeFullReportFile(String filename){
+        if(!filename.endsWith(".txt"))filename = filename+".txt";
+        try {
+            FileWriter writer = new FileWriter(new File(filename),false);
+            writer.write("ISBN|Title|Author|Publisher|YearPublished|Price|Quantity|");
+            Enumeration<String> keys= table.keys();
+            String key;
+            while(keys.hasMoreElements()){
+                key=keys.nextElement();
+                Bookitem i = table.get(key);
+                writer.write(System.lineSeparator());
+                writer.write(i.isbn+"|"+i.title+"|"+i.author+"|"+i.publisher+"|"+i.year_published+"|"+i.price+"|"+i.quantity+"|"+i.rating);
+
+            }
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
