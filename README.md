@@ -1,6 +1,7 @@
 # Media_Evalutor
 Media Evaluation of Books:
-With a list or a single ISBN, the software evaluates the following attributes of a book:
+
+Takes in an input of ISBN, either individually or as a list. Program is then able to evaluate the following attributes of a book:
 
 * Title
 * Author
@@ -9,7 +10,9 @@ With a list or a single ISBN, the software evaluates the following attributes of
 * Price
 * Rating
 
-It uses solely https://amazon.com and regex for datamining.
-Data is stored into data structure that can be queried and saved to a file.
-Every entry is logged when modified or added to "database"
+It uses information from [Amazon](https://amazon.com) and regex for datamining.
+Data is stored into a data structure that can be queried and saved to a file.
+Every entry is logged when modified or added to "database".
 Provided is a GUI to help the user navigate along the capability to run from command line.
+
+This is an ongoing project.
