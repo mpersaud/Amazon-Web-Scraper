@@ -15,4 +15,4 @@ Data is stored into a data structure that can be queried and saved to a file.
 Every entry is logged when modified or added to "database".
 Provided is a GUI to help the user navigate along the capability to run from command line.
 
-This is an ongoing project.
+This is an ongoing project!
